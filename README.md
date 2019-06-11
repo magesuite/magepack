@@ -7,13 +7,13 @@ Attempt at making Require.js optimization for Magento shops as automatic as poss
 Install with npm:
 
 ```
-npm install -g magepack
+npm install -g magepack --no-optional
 ```
 
 Install with yarn:
 
 ```
-yarn global add magepack
+yarn global add magepack --ignore-optional
 ```
 
 In order to save installation time, disk space and bandwidth on the CI, puppeteer is listed as an optional package because it is only required for configuration generation step.
@@ -34,7 +34,7 @@ MagePack is able to extract some of the above automatically from your existing s
 
 Before running the generation, you have to prepare a small config file, sample for which along with some comments can be found at [config.sample.js](https://github.com/magesuite/magepack/blob/master/config.sample.js). This config file will be merged on top of [base configuration](https://github.com/magesuite/magepack/blob/master/lib/baseConfig.js) so it is possible to overwrite any of the defaults.
 
-After preparing the `config.js` file we can run the generation process via:
+After preparing the `config.js` file (and making sure Puppeteer is installed) we can run the generation process via:
 
 ```
 magepack --generate --config config.js --output build.js
