@@ -1,8 +1,10 @@
 {
     "name": "magepack",
     "version": "1.0.0",
-    "main": "cli.js",
-    "license": "MIT",
+    "bin": "./cli.js",
+    "repository": "https://github.com/magesuite/magepack.git",
+    "author": "creativestyle",
+    "license": "OSL-2.0",
     "dependencies": {
         "commander": "^2.20.0",
         "fs-extra": "^8.0.1",
