@@ -63,7 +63,7 @@ modules: [
     {
         name: 'foo/bar',
         create: true,
-        exclude: ['requirejs/require'],
+        exclude: ['bundles/common'],
         include: ['foo/bar/baz'],
     },
 ];
@@ -77,7 +77,7 @@ modules: [
         Promise.resolve({
             name: 'foo/bar',
             create: true,
-            exclude: ['requirejs/require'],
+            exclude: ['bundles/common'],
             include: ['foo/bar/baz'],
         }),
 ];

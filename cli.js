@@ -48,7 +48,7 @@ if (program.generate) {
     }
 
     try {
-        require('./lib/optimize')(program.config, program.dir);
+        require('./lib/bundle')(program.config, program.dir);
     } catch (error) {
         console.error(error);
         process.exit(1);
