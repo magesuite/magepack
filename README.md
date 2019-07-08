@@ -83,6 +83,24 @@ modules: [
 ];
 ```
 
+## Quirks and Gotchas
+
+### Modules with mixins defined cannot be included in a bundle
+
+```javascript
+bundleId = getOwn(bundlesMap, moduleName);
+
+if (bundleId) {
+    return context.nameToUrl(bundleId, ext, skipExt);
+}
+```
+
+### Text plugin requires additional configuration
+
+### Uglify mangling has to be disabled
+
+### Additional RequireJS config has to be added
+
 ## Versioning
 
 We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/magesuite/magepack/tags).

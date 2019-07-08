@@ -34,12 +34,10 @@ if (program.generate) {
         );
     }
 
-    try {
-        require('./lib/generate')(program.output, program.config);
-    } catch (error) {
+    require('./lib/generate')(program.output, program.config).catch(error => {
         console.error(error);
         process.exit(1);
-    }
+    });
 } else if (program.bundle) {
     if (!program.config || !program.dir) {
         throw new Error(
@@ -47,12 +45,10 @@ if (program.generate) {
         );
     }
 
-    try {
-        require('./lib/bundle')(program.config, program.dir);
-    } catch (error) {
+    require('./lib/bundle')(program.config, program.dir).catch(error => {
         console.error(error);
         process.exit(1);
-    }
+    });
 } else {
     throw new Error('You need to provide either --generate or --bundle option');
 }
