@@ -87,19 +87,60 @@ modules: [
 
 ### Modules with mixins defined cannot be included in a bundle
 
+Because of below code located within [RequireJS](https://github.com/requirejs/requirejs/blob/042628d72a9be906f9e79c8e1965439c2beb946b/require.js#L1634):
+
 ```javascript
 bundleId = getOwn(bundlesMap, moduleName);
 
 if (bundleId) {
-    return context.nameToUrl(bundleId, ext, skipExt);
+    return context.nameToUrl(bundleId, ext, skipExt); // Returns bundle path instead of module path.
 }
 ```
 
+plugin is not able to properly match given module with its mixins which prevents them from applying. This means that any module which has mixins defined cannot be bundled.
+
+### Text inlining has to be disabled
+
+In the early stages there were issues with Magento being unable to properly parse Knockout templates that were inlined by the optimizer so this feature is disabled. I will be revisiting this option soon to check if that obstacle can be resolved.
+
 ### Text plugin requires additional configuration
 
-### Uglify mangling has to be disabled
+As far as I understand, because of lack of inlining and CDN usage, [text plugin requires additional configuration](https://github.com/requirejs/text#xhr-restrictions) which this tool writes into `requirejs.config.js` when bundling:
+
+```javascript
+requirejs.config({
+    config: {
+        text: {
+            useXhr: function() {
+                return true;
+            },
+        },
+    },
+});
+```
+
+Above lines prevent the plugin from requesting JavaScript versions of required templates resulting in 404 responses.
+
+### Uglify's mangling has to be disabled
+
+Because there are already some minified files included in Magento (mainly `legacy-build.min.js`) mangling them second time breaks the source code and leads to some random errors. Sadly, there is no way to exclude specific files from this transformation so we had to disable it completely.
 
 ### Additional RequireJS config has to be added
+
+Last, but not least the following config has to be added when bundling, otherwise you'll encounter missing dependencies and `Cannot access x of undefined` errors:
+
+```javascript
+{
+    shim: {
+        'jquery/jquery-migrate': ['jquery', 'jquery/jquery.cookie'],
+        'fotorama/fotorama': ['jquery'],
+    },
+    paths: {
+        text: 'requirejs/text', // Magento's version of the plugin doesn't support non-browser environment.
+        mixins: 'mage/requirejs/mixins',
+    },
+}
+```
 
 ## Versioning
 
