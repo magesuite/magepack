@@ -14,9 +14,9 @@
         "stringify-object": "^3.3.0"
     },
     "files": [
-        "cli.js",
-        "config.sample.js",
-        "lib/"
+        "./cli.js",
+        "./config.sample.js",
+        "./lib/**/*"
     ],
     "lint-staged": {
         "*.json": [
