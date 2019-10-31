@@ -1,8 +1,4 @@
-const category = require('magepack/lib/module/category');
-// const checkout = require('magepack/lib/module/checkout');
-const cms = require('magepack/lib/module/cms');
-// const customer = require('magepack/lib/module/customer');
-const pdp = require('magepack/lib/module/pdp');
+const { category, cms, pdp } = require('magepack');
 
 /**
  * Base URL stored in a separate variable for less repetition.
