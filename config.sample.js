@@ -1,7 +1,7 @@
 const category = require('magepack/lib/module/category');
 // const checkout = require('magepack/lib/module/checkout');
 const cms = require('magepack/lib/module/cms');
-const customer = require('magepack/lib/module/customer');
+// const customer = require('magepack/lib/module/customer');
 const pdp = require('magepack/lib/module/pdp');
 
 /**
@@ -34,13 +34,13 @@ module.exports = {
                 url: baseUrl,
                 excludeRegExp: /^\.|amazon|smile|klarna|Magento_Checkout\/js\/view\/minicart/i,
             }),
-        browser =>
-            customer(browser, {
-                url: `${baseUrl}/customer/account/login/`,
-                email: 'test@demo.magesuite.io',
-                password: 'Testing123',
-                excludeRegExp: /^\.|amazon|smile|klarna|Magento_Checkout\/js\/view\/minicart/i,
-            }),
+        // browser =>
+        //     customer(browser, {
+        //         url: `${baseUrl}/customer/account/login/`,
+        //         email: 'test@demo.magesuite.io',
+        //         password: 'Testing123',
+        //         excludeRegExp: /^\.|amazon|smile|klarna|Magento_Checkout\/js\/view\/minicart/i,
+        //     }),
         browser =>
             pdp(browser, {
                 url: [
