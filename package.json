@@ -1,6 +1,6 @@
 {
     "name": "magepack",
-    "version": "1.4.0",
+    "version": "2.0.0",
     "bin": "./cli.js",
     "repository": "https://github.com/magesuite/magepack.git",
     "author": "creativestyle",
@@ -15,17 +15,15 @@
         "javascript-stringify": "^2.0.1",
         "jsesc": "^2.5.2",
         "lodash.merge": "^4.6.2",
-        "terser": "4.6.7"
+        "terser": "^4.6.7"
     },
     "lint-staged": {
         "*.json": [
-            "prettier --write",
-            "git add"
+            "prettier --write"
         ],
         "*.js": [
             "prettier --write",
-            "eslint --fix",
-            "git add"
+            "eslint --fix"
         ]
     },
     "prettier": {
