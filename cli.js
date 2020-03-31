@@ -1,54 +1,46 @@
 #!/usr/bin/env node
 
 const program = require('commander');
+const logger = require('./lib/utils/logger');
 const version = require('./package.json').version;
 
-program.usage('[--generate|--bundle] <options...>');
+program.name('magepack').usage('[generate|bundle] <options...>');
 
 program
-    .version(version)
-    .option(
-        '-g, --generate',
-        'generate optimization configuration based on given configuration file.'
+    .version(version, '-v, --version', 'Output the current version.')
+    .helpOption('-h, --help', 'Show this command summary.')
+    .addHelpCommand(false);
+
+program
+    .command('generate')
+    .description(
+        'Generate optimization configuration based on given page URLs.'
     )
-    .option('-c, --config <path>', 'input path for configuration file.')
-    .option(
-        '-o, --output <path>',
-        'output path for bundling configuration file.'
-    )
-    .option(
-        '-b, --bundle',
-        'bundle JavaScript files based on given configuration file.'
-    )
-    .option(
-        '-d, --dir <path>',
-        'input path for directory containing JavaScript files.'
-    );
+    .requiredOption('--cms-url <url>', 'CMS page URL.')
+    .requiredOption('--category-url <url>', 'Category page URL.')
+    .requiredOption('--product-url <url>', 'Product page URL.')
+    .option('-d, --debug', 'Enable logging of debugging information.')
+    .action(({ cmsUrl, categoryUrl, productUrl, debug }) => {
+        if (debug) {
+            logger.level = 5;
+        }
+
+        require('./lib/generate')({ cmsUrl, categoryUrl, productUrl }).catch(
+            logger.error
+        );
+    });
+
+program
+    .command('bundle')
+    .description('Bundle JavaScript files using given configuration file.')
+    .requiredOption('-c, --config <path>', 'Configuration file path.')
+    .option('-d, --debug', 'Enable logging of debugging information.')
+    .action(({ config, debug }) => {
+        if (debug) {
+            logger.level = 5;
+        }
+
+        require('./lib/bundle')(config).catch(logger.error);
+    });
 
 program.parse(process.argv);
-
-if (program.generate) {
-    if (!program.config || !program.output) {
-        throw new Error(
-            'Generation requires both --config and --output options to be provided.'
-        );
-    }
-
-    require('./lib/generate')(program.output, program.config).catch(error => {
-        console.error(error);
-        process.exit(1);
-    });
-} else if (program.bundle) {
-    if (!program.config || !program.dir) {
-        throw new Error(
-            'Generation requires both --config and --dir options to be provided.'
-        );
-    }
-
-    require('./lib/bundle')(program.config, program.dir).catch(error => {
-        console.error(error);
-        process.exit(1);
-    });
-} else {
-    throw new Error('You need to provide either --generate or --bundle option');
-}

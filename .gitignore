@@ -1,5 +1,4 @@
-config.js
-build.js
+magepack.build.js
 
 # Created by https://www.gitignore.io/api/osx,node,windows,visualstudiocode
 # Edit at https://www.gitignore.io/?templates=osx,node,windows,visualstudiocode
