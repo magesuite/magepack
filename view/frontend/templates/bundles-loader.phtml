@@ -1,0 +1,38 @@
+<?php
+$commonBundleUrl = $block->getCommonBundleUrl();
+$pageBundlesUrls = $block->getPageBundlesUrls();
+$prefetchBundlesUrls = $block->getPrefetchBundlesUrls();
+?>
+
+<?php if ($commonBundleUrl): ?>
+<link rel="preload" as="script" href="<?= $commonBundleUrl; ?>"/>
+<?php endif; ?>
+
+<?php foreach($pageBundlesUrls as $pageBundleUrl): ?>
+<link rel="preload" as="script" href="<?= $pageBundleUrl; ?>"/>
+<?php endforeach; ?>
+
+<?php if (!empty($prefetchBundlesUrls)): ?>
+<script>
+(function(root, doc) {
+    var headElement,
+        bundleLink,
+        bundleUrls = <?= json_encode($prefetchBundlesUrls); ?>,
+        idleCallback = root.requestIdleCallback || root.setTimeout;
+
+    if (headElement = doc.querySelector('head')) {
+        root.addEventListener('load', function() {
+            idleCallback(function() {
+                bundleUrls.forEach(function(bundleUrl) {
+                    bundleLink = doc.createElement('link');
+                    bundleLink.rel = 'prefetch';
+                    bundleLink.as = 'script';
+                    bundleLink.href = bundleUrl;
+                    headElement.appendChild(bundleLink);
+                });
+            });
+        });
+    }
+}(window, document))
+</script>
+<?php endif; ?>

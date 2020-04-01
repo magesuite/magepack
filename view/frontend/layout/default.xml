@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceBlock name="head.additional">
+            <block class="MageSuite\Magepack\Block\BundlesLoader" name="magepack.bundles" ifconfig="dev/js/enable_magepack_js_bundling">
+                <arguments>
+                    <!-- Configuration for the bundle that should be loaded on every page. -->
+                    <argument name="common_bundle" xsi:type="array">
+                        <item name="config_path" xsi:type="string">magepack/requirejs-config-common.js</item>
+                        <item name="bundle_path" xsi:type="string">magepack/bundle-common.js</item>
+                    </argument>
+                    <!-- Configuration for bundles specific to certain types of pages. -->
+                    <argument name="page_bundles" xsi:type="array"/>
+                    <!-- List of bundles that should be prefetched when all things loaded and browser is idle. -->
+                    <argument name="prefetch_bundles" xsi:type="array">
+                        <item name="cms" xsi:type="string">magepack/bundle-cms.js</item>
+                        <item name="category" xsi:type="string">magepack/bundle-category.js</item>
+                        <item name="product" xsi:type="string">magepack/bundle-product.js</item>
+                        <item name="checkout" xsi:type="string">magepack/bundle-checkout.js</item>
+                    </argument>
+                </arguments>
+            </block>
+        </referenceBlock>
+    </body>
+</page>

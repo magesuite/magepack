@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceBlock name="magepack.bundles" ifconfig="dev/js/enable_magepack_js_bundling">
+            <arguments>
+                <argument name="page_bundles" xsi:type="array">
+                    <item name="product" xsi:type="array">
+                        <item name="config_path" xsi:type="string">magepack/requirejs-config-checkout.js</item>
+                        <item name="bundle_path" xsi:type="string">magepack/bundle-checkout.js</item>
+                    </item>
+                </argument>
+            </arguments>
+        </referenceBlock>
+    </body>
+</page>
