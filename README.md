@@ -6,7 +6,7 @@ Magepack is a bold attempt in making Magento 2 frontend as fast as never before.
 
 ## Top highlights\*
 
--   Up to 94 points mobile score in Google Lighthouse.
+-   Up to 91 points mobile score in Google Lighthouse.
 -   Up to 98% reduction in JavaScript file requests (from 177 to only 3).
 -   Up to 44% reduction in transferred JavaScript size.
 -   Up to 75% reduction in total load time.
@@ -107,7 +107,7 @@ Now the shop should be way faster then before 🚀 You can (and should) even ena
 
 ## Results
 
-Here are our tests results, running on local development environment with clean Magento 2.3.4, sample data, all caches enabled and following optimizations:
+Here are our tests results, testing homepage on local development environment with clean Magento 2.3.4, sample data, all caches enabled and following optimizations:
 
 -   JavaScript:
     -   `Merge JavaScript Files` - `Yes`.
@@ -122,6 +122,17 @@ Here are our tests results, running on local development environment with clean 
     -   `Minify Html` - `Yes`.
 
 ### No Bundling
+![Lighthouse report with 53 score](https://github.com/magesuite/magepack/raw/master/results/no-bundling.png)
+
+### Bundling with Baler
+
+Please not that Baler does not currently support Magento's JavaScript merging and minification.
+
+![Lighthouse report with 64 score](https://github.com/magesuite/magepack/raw/master/results/baler.png)
+
+### Bundling with Magepack
+
+![Lighthouse report with 91 score](https://github.com/magesuite/magepack/raw/master/results/magepack.png)
 
 ## Debugging
 
@@ -143,5 +154,6 @@ This project is licensed under the OSL-3.0 license - see the [LICENSE.md](LICENS
 
 ## Acknowledgments
 
--   Authors of [Advanced JavaScript bundling guide](https://devdocs.magento.com/guides/v2.3/performance-best-practices/advanced-js-bundling.html)
+-   Authors of [Advanced JavaScript bundling guide](https://devdocs.magento.com/guides/v2.3/performance-best-practices/advanced-js-bundling.html).
+-   Authors of [Baler](https://github.com/magento/baler/).
 -   Magento Community Engineering Slack.
