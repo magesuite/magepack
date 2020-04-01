@@ -1,146 +1,137 @@
-# MagePack
+# Magepack 🚀
 
-Attempt at making Require.js optimization for Magento shops as automatic as possible without having to follow entire [Advanced JavaScript bundling guide](https://devdocs.magento.com/guides/v2.3/performance-best-practices/advanced-js-bundling.html) by hand.
+**Version 2.0.0 of Magepack released, with greater performance results and easier usage!**
+
+Magepack is a bold attempt in making Magento 2 frontend as fast as never before. It builds on experiences gained with [Advanced JavaScript bundling guide](https://devdocs.magento.com/guides/v2.3/performance-best-practices/advanced-js-bundling.html) and [Baler](https://github.com/magento/baler) to provide the best of both worlds - ease of use and superior performance.
+
+## Top highlights\*
+
+-   Up to 94 points mobile score in Google Lighthouse.
+-   Up to 98% reduction in JavaScript file requests (from 177 to only 3).
+-   Up to 44% reduction in transferred JavaScript size.
+-   Up to 75% reduction in total load time.
+-   Works with Magento's JavaScript minification and merging enabled.
+-   Uses custom solution (inspired by Baler) instead of RequireJs optimizer which is way more flexible, faster, produces smaller bundle and doesn't break on missing files.
+
+_\* All data gathered on clean Magento 2 with sample data installed._
 
 ## Installing
+
+Here are the requirements for Magepack to work:
+
+1. You need Node.js version 10 or higher installed.
+2. You need to have `mixins.js` module patched [(patch provided and explained here)](https://github.com/magento/baler/issues/23).
+3. If you are using Magento 2.3.3 or lower, you need `jquery.cookie` module shim [(patch provided and explained here)](https://github.com/magento/baler/issues/6).
+4. [Magepack Magento module](https://github.com/magesuite/magepack-magento) installed.
 
 Install with npm:
 
 ```
-npm install -g magepack --no-optional
+npm install -g magepack
 ```
 
 Install with yarn:
 
 ```
-yarn global add magepack --ignore-optional
+yarn global add magepack
 ```
 
-In order to save installation time, disk space and bandwidth on the CI, puppeteer is listed as an optional package because it is only required for configuration generation step.
+## Usage
 
-## Bundling
+```shell
+Usage: magepack [generate|bundle] <options...>
 
-By design of this module, bundling process is divided into two steps: configuration generation - usually run locally against target environment and bundling which has to be run after deployment of static content is finished.
+Options:
+  -v, --version       Output the current version.
+  -h, --help          Show this command summary.
+
+Commands:
+  generate [options]  Generate optimization configuration based on given page URLs.
+  bundle [options]    Bundle JavaScript files using given configuration file.
+```
 
 ### Generating bundler configuration
 
-In order for Require.js optimizer to work properly we need to prepare a configuration for it, which contains following pieces of information:
+First step is to run the generation against the existing, working shop. You can do it on any machine with access to the target shop, even your own computer. The goal here is to collect all of the RequireJS dependencies needed for a certain type of page layout. Currently, following bundles are prepared:
 
--   Lists of `deps`, `paths`, `shim` and `map`.
--   List of `modules`.
--   Configuration options for optimizer itself.
+-   `cms` containing modules needed by CMS pages.
+-   `category` containing modules needed by category pages.
+-   `product` containing modules needed by product pages.
+-   `checkout` containing modules needed by cart and checkout pages.
 
-MagePack is able to extract some of the above automatically from your existing shop website and provides sensible defaults for the rest.
+In addition, there is the `common` bundle created by extracting all modules needed by each of above and loaded on every page.
 
-Before running the generation, you have to prepare a small config file, sample for which along with some comments can be found at [config.sample.js](https://github.com/magesuite/magepack/blob/master/config.sample.js). This config file will be merged on top of [base configuration](https://github.com/magesuite/magepack/blob/master/lib/baseConfig.js) so it is possible to overwrite any of the defaults.
-
-After preparing the `config.js` file (and making sure Puppeteer is installed) we can run the generation process via:
+#### Running the generator
 
 ```
-magepack --generate --config config.js --output build.js
+magepack generate --cms-url="{{CMS_PAGE_URL}}" --category-url="{{CATEGORY_PAGE_URL}}" --product-url="{{PRODUCT_PAGE_URL}}"
 ```
 
-which will make the module go through the shop based on `config.js` and gather optimizer configuration into `build.js` file.
+There are 3 required options you need to pass:
 
-Please note, that in order to achieve best performance the generator extracts all of the common modules used by each group defined within `modules` array into separate, synchronously-loaded package.
+`--cms-url` - URL to one of CMS pages (e.g. homepage).
+
+`--category-url` - URL to one of category pages.
+
+`--product-url` - URL to one of product pages.
+
+_Note: Magepack will use given product page, add this product to the cart and visit both cart and checkout pages to collect dependencies._
+
+Running the above command will generate `magepack.config.js` file, where you can find each of the prepared bundles with the list of modules that will be included in them.
 
 ### Bundling
 
-Once you have generated bundler configuration, the next step would be to trigger the actual optimization after static content deploy stage has finished for every theme and language that is going to be enabled on the storefront:
+Once you have generated bundler configuration, the next step would be to trigger the actual optimization **after static content deploy stage has finished** by running the following in shop root directory:
 
 ```
-magepack --bundle --config build.js --dir pub/static/frontend/<vendor>/<theme>/<language>
+magepack bundle
 ```
 
-## Defining custom modules
+This command will iterate over each deployed locale (excluding Magento/blank) and prepare bundles for each of them.
 
-There may be the case that you would like to some extra modules instead or on top of what is already provided. There are two ways of defining a module:
+### Enabling
 
-Plain object compatible with [Require.js definition](https://github.com/requirejs/r.js/blob/master/build/example.build.js#L355):
+Once you made sure [Magepack Magento module](https://github.com/magesuite/magepack-magento) is installed, what is left is to enable it via admin panel under Stores->Configuration->Advanced->Developer or CLI:
 
-```javascript
-modules: [
-    {
-        name: 'foo/bar',
-        create: true,
-        exclude: ['bundles/common'],
-        include: ['foo/bar/baz'],
-    },
-];
+```shell
+bin/magento config:set dev/js/enable_magepack_js_bundling 1
 ```
 
-Asynchronous function that accepts puppeteer's [Browser class instance](https://pptr.dev/#?product=Puppeteer&version=v1.16.0&show=api-class-browser) and returns a promise which resolves to above plain object:
+and clearing the cache:
 
-```javascript
-modules: [
-    browser =>
-        Promise.resolve({
-            name: 'foo/bar',
-            create: true,
-            exclude: ['bundles/common'],
-            include: ['foo/bar/baz'],
-        }),
-];
+```shell
+bin/magento cache:clean
 ```
 
-## Quirks and Gotchas
+Now the shop should be way faster then before 🚀 You can (and should) even enable all Magento's performance optimizations (except JavaScript bundling of course) for even better results.
 
-### Modules with mixins defined cannot be included in a bundle
+## Results
 
-Because of below code located within [RequireJS](https://github.com/requirejs/requirejs/blob/042628d72a9be906f9e79c8e1965439c2beb946b/require.js#L1634):
+Here are our tests results, running on local development environment with clean Magento 2.3.4, sample data, all caches enabled and following optimizations:
 
-```javascript
-bundleId = getOwn(bundlesMap, moduleName);
+-   JavaScript:
+    -   `Merge JavaScript Files` - `Yes`.
+    -   `Enable JavaScript Bundling` - `No`.
+    -   `Minify JavaScript Files` - `Yes`.
+    -   `Move JS code to the bottom of the page` - `Yes`.
+-   CSS:
+    -   `Merge CSS Files` - `Yes`.
+    -   `Minify CSS Files` - `Yes`.
+    -   `Use CSS critical path` - `Yes`.
+-   Templates:
+    -   `Minify Html` - `Yes`.
 
-if (bundleId) {
-    return context.nameToUrl(bundleId, ext, skipExt); // Returns bundle path instead of module path.
-}
-```
+### No Bundling
 
-plugin is not able to properly match given module with its mixins which prevents them from applying. This means that any module which has mixins defined cannot be bundled.
+## Debugging
 
-### Text inlining has to be disabled
+Before rising an issue please follow below guidelines:
 
-In the early stages there were issues with Magento being unable to properly parse Knockout templates that were inlined by the optimizer so this feature is disabled. I will be revisiting this option soon to check if that obstacle can be resolved.
-
-### Text plugin requires additional configuration
-
-As far as I understand, because of lack of inlining and CDN usage, [text plugin requires additional configuration](https://github.com/requirejs/text#xhr-restrictions) which this tool writes into `requirejs.config.js` when bundling:
-
-```javascript
-requirejs.config({
-    config: {
-        text: {
-            useXhr: function() {
-                return true;
-            },
-        },
-    },
-});
-```
-
-Above lines prevent the plugin from requesting JavaScript versions of required templates resulting in 404 responses.
-
-### Uglify's mangling has to be disabled
-
-Because there are already some minified files included in Magento (mainly `legacy-build.min.js`) mangling them second time breaks the source code and leads to some random errors. Sadly, there is no way to exclude specific files from this transformation so we had to disable it completely.
-
-### Additional RequireJS config has to be added
-
-Last, but not least the following config has to be added when bundling, otherwise you'll encounter missing dependencies and `Cannot access x of undefined` errors:
-
-```javascript
-{
-    shim: {
-        'jquery/jquery-migrate': ['jquery', 'jquery/jquery.cookie'],
-        'fotorama/fotorama': ['jquery'],
-    },
-    paths: {
-        text: 'requirejs/text', // Magento's version of the plugin doesn't support non-browser environment.
-        mixins: 'mage/requirejs/mixins',
-    },
-}
-```
+-   Problems with bundling:
+    -   Make sure there are no JavaScript errors thrown by the shop which may prevent Magepack from collecting the dependencies.
+-   Problems with generation:
+    -   Make sure all locales are properly deployed and no files are missing.
+-   Try running the command with `--debug` or `-d` flag that makes Magepack output more information about the ongoing process which should make debugging easier.
 
 ## Versioning
 

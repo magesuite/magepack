@@ -20,20 +20,22 @@ program
     .requiredOption('--category-url <url>', 'Category page URL.')
     .requiredOption('--product-url <url>', 'Product page URL.')
     .option('-d, --debug', 'Enable logging of debugging information.')
-    .action(({ cmsUrl, categoryUrl, productUrl, debug }) => {
-        if (debug) {
+    .action((config) => {
+        if (config.debug) {
             logger.level = 5;
         }
 
-        require('./lib/generate')({ cmsUrl, categoryUrl, productUrl }).catch(
-            logger.error
-        );
+        require('./lib/generate')(config).catch(logger.error);
     });
 
 program
     .command('bundle')
     .description('Bundle JavaScript files using given configuration file.')
-    .requiredOption('-c, --config <path>', 'Configuration file path.')
+    .option(
+        '-c, --config <path>',
+        'Configuration file path.',
+        'magepack.config.js'
+    )
     .option('-d, --debug', 'Enable logging of debugging information.')
     .action(({ config, debug }) => {
         if (debug) {
