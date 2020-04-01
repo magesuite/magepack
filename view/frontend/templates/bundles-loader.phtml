@@ -1,4 +1,6 @@
 <?php
+/** @var \MageSuite\Magepack\Block\BundlesLoader $block */
+
 $commonBundleUrl = $block->getCommonBundleUrl();
 $pageBundlesUrls = $block->getPageBundlesUrls();
 $prefetchBundlesUrls = $block->getPrefetchBundlesUrls();
@@ -19,7 +21,7 @@ $prefetchBundlesUrls = $block->getPrefetchBundlesUrls();
         bundleLink,
         bundleUrls = <?= json_encode($prefetchBundlesUrls); ?>,
         idleCallback = root.requestIdleCallback || root.setTimeout;
-
+    // Prefetch all bundles via link tags when browser gets idle.
     if (headElement = doc.querySelector('head')) {
         root.addEventListener('load', function() {
             idleCallback(function() {
