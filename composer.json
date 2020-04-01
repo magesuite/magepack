@@ -1,6 +1,6 @@
 {
   "name": "creativestyle/magesuite-magepack",
-  "description": "",
+  "description": "Module responsible for handling advanced JavaScript bundling.",
   "homepage": "https://creativestyle.de",
   "license": "OSL-3.0",
   "type": "magento2-module",
