@@ -1,3 +1,6 @@
+/**
+ * Sample Magepack config generated for clean Magento 2.3.4 with sample data installed.
+ */
 module.exports = [
     {
         name: 'common',
