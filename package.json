@@ -1,6 +1,6 @@
 {
     "name": "magepack",
-    "version": "2.1.0",
+    "version": "2.1.1",
     "bin": "./cli.js",
     "repository": "https://github.com/magesuite/magepack.git",
     "author": "creativestyle",
