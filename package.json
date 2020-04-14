@@ -6,14 +6,16 @@
     "author": "creativestyle",
     "license": "OSL-2.0",
     "main": "index.js",
+    "engines": {
+        "node": ">=10"
+    },
     "dependencies": {
         "commander": "^5.0.0",
         "consola": "^2.11.3",
-        "fs-extra": "^9.0.0",
         "glob": "^7.1.6",
         "gzip-size": "^5.1.1",
         "javascript-stringify": "^2.0.1",
-        "jsesc": "^2.5.2",
+        "jsesc": "^3.0.1",
         "lodash.merge": "^4.6.2",
         "terser": "^4.6.7"
     },
