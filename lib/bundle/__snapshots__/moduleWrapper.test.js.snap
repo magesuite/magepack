@@ -1,0 +1,24 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`moduleWrapper module wrapAnonymousAmd output matches snapshot 1`] = `"define('foo', [], function() {});"`;
+
+exports[`moduleWrapper module wrapNonAmd output matches snapshot 1`] = `
+"define('name', (require.s.contexts._.config.shim['name'] && require.s.contexts._.config.shim['name'].deps || []), function() {
+
+    true;
+
+    return (require.s.contexts._.config.shim['name'] && require.s.contexts._.config.shim['name'].exportsFn && require.s.contexts._.config.shim['name'].exportsFn());
+}.bind(window));"
+`;
+
+exports[`moduleWrapper module wrapText output matches snapshot 1`] = `
+"define('name', function() {
+    return 'true;';
+});"
+`;
+
+exports[`moduleWrapper module wrapText output matches snapshot for escaped content 1`] = `
+"define('name', function() {
+    return '<div>\\"Hello\\"</div>';
+});"
+`;
