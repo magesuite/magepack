@@ -38,13 +38,17 @@ program
         'Configuration file path.',
         'magepack.config.js'
     )
+    .option(
+        '--exclude-locales <code>',
+        'Exclude locales from bundling, comma separated'
+    )
     .option('-d, --debug', 'Enable logging of debugging information.')
-    .action(({ config, debug }) => {
+    .action(({ config, excludeLocales, debug }) => {
         if (debug) {
             logger.level = 5;
         }
 
-        require('./lib/bundle')(config).catch(logger.error);
+        require('./lib/bundle')(config, excludeLocales).catch(logger.error);
     });
 
 program.parse(process.argv);
