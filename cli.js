@@ -38,6 +38,7 @@ program
         'Configuration file path.',
         'magepack.config.js'
     )
+    .option('-g, --glob <path>', 'Glob pattern of themes to bundle.')
     .option('-d, --debug', 'Enable logging of debugging information.')
     .action(({ config, debug }) => {
         if (debug) {

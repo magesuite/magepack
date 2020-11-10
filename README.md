@@ -89,6 +89,9 @@ magepack bundle
 
 This command will iterate over each deployed locale (excluding Magento/blank) and prepare bundles for each of them.
 
+There is one optional param you can set:
+`-g, --glob` - [Glob pattern](https://facelessuser.github.io/wcmatch/glob/#syntax) defining where to look for locales to bundle.
+
 ### Enabling
 
 Once you made sure [Magepack Magento module](https://github.com/magesuite/magepack-magento) is installed, what is left is to enable it via admin panel under Stores->Configuration->Advanced->Developer or CLI:
