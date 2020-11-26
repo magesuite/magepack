@@ -40,12 +40,12 @@ program
     )
     .option('-g, --glob <path>', 'Glob pattern of themes to bundle.')
     .option('-d, --debug', 'Enable logging of debugging information.')
-    .action(({ config, debug }) => {
+    .action(({ config, debug, glob }) => {
         if (debug) {
             logger.level = 5;
         }
 
-        require('./lib/bundle')(config).catch(logger.error);
+        require('./lib/bundle')(config, glob).catch(logger.error);
     });
 
 program.parse(process.argv);
