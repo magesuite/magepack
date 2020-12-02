@@ -20,7 +20,7 @@ _\* All data gathered on clean Magento 2 with sample data installed._
 Here are the requirements for Magepack to work:
 
 1. You need Node.js version 10 or higher installed.
-2. You need to have `mixins.js` module patched [(patch provided and explained here)](https://github.com/magento/baler/issues/23).
+2. If you are using Magento 2.3.5 or lower, you need to have `mixins.js` module patched [(patch provided and explained here)](https://github.com/magento/baler/issues/23).
 3. If you are using Magento 2.3.3 or lower, you need `jquery.cookie` module shim [(patch provided and explained here)](https://github.com/magento/baler/issues/6).
 4. [Magepack Magento module](https://github.com/magesuite/magepack-magento) installed.
 
