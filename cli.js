@@ -22,6 +22,7 @@ program
     .option('-u, --auth-username <user>', 'Basic authentication username.')
     .option('-p, --auth-password <password>', 'Basic authentication password.')
     .option('-d, --debug', 'Enable logging of debugging information.')
+    .option('-t, --timeout <milliseconds>', 'Page navigation timeout in milliseconds.')
     .action((config) => {
         if (config.debug) {
             logger.level = 5;
