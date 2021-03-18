@@ -129,7 +129,7 @@ Here are our tests results, testing homepage on local development environment wi
 
 ### Bundling with Baler
 
-Please not that Baler does not currently support Magento's JavaScript merging and minification.
+Please note that Baler does not currently support Magento's JavaScript merging and minification.
 
 ![Lighthouse report with 64 score](https://github.com/magesuite/magepack/raw/master/results/baler.png)
 
