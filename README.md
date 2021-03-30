@@ -89,8 +89,11 @@ magepack bundle
 
 This command will iterate over each deployed locale (excluding Magento/blank) and prepare bundles for each of them.
 
-There is one optional param you can set:
-`-g, --glob` - [Glob pattern](https://facelessuser.github.io/wcmatch/glob/#syntax) defining where to look for locales to bundle.
+There are two optional params you can set:
+
+`-c, --config` - defining the configuration file path, in case you have multiple configuration files (e.g multiple themes with individual configuration files)
+
+`-g, --glob` -  defining where to look for locales to bundle.
 
 ### Enabling
 
