@@ -3,6 +3,10 @@
 const program = require('commander');
 const logger = require('./lib/utils/logger');
 const version = require('./package.json').version;
+const errorHandler = function (error) {
+    logger.error(error);
+    process.exit(1);
+};
 
 program.name('magepack').usage('[generate|bundle] <options...>');
 
@@ -27,7 +31,7 @@ program
             logger.level = 5;
         }
 
-        require('./lib/generate')(config).catch(logger.error);
+        require('./lib/generate')(config).catch(errorHandler);
     });
 
 program
@@ -45,7 +49,7 @@ program
             logger.level = 5;
         }
 
-        require('./lib/bundle')(config, glob).catch(logger.error);
+        require('./lib/bundle')(config, glob).catch(errorHandler);
     });
 
 program.parse(process.argv);
