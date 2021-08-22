@@ -10,4 +10,4 @@ jobs:
       run: yarn install --non-interactive --ignore-optional
 
     - name: Run ESLint
-      run: eslint . --report-unused-disable-directives
+      run: node_modules/eslint/bin/eslint.js . --report-unused-disable-directives
