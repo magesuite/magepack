@@ -75,7 +75,7 @@ There are 3 required options you need to pass:
 
 `--product-url` - URL to one of product pages.
 
-_Note: Magepack will use given product page, add this product to the cart and visit both cart and checkout pages to collect dependencies._
+_Note: By default, Magepack will use given product page, add this product to the cart and visit both cart and checkout pages to collect dependencies. To avoid this, use the `--skip-checkout` option._
 
 Running the above command will generate `magepack.config.js` file, where you can find each of the prepared bundles with the list of modules that will be included in them.
 
