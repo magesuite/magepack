@@ -3,6 +3,10 @@
 const program = require('commander');
 const logger = require('./lib/utils/logger');
 const version = require('./package.json').version;
+const errorHandler = function (error) {
+    logger.error(error);
+    process.exit(1);
+};
 
 program.name('magepack').usage('[generate|bundle] <options...>');
 
@@ -23,12 +27,13 @@ program
     .option('-p, --auth-password <password>', 'Basic authentication password.')
     .option('-d, --debug', 'Enable logging of debugging information.')
     .option('-t, --timeout <milliseconds>', 'Page navigation timeout in milliseconds.')
+    .option('--skip-checkout', 'Do not generate a bundle for checkout.')
     .action((config) => {
         if (config.debug) {
             logger.level = 5;
         }
 
-        require('./lib/generate')(config).catch(logger.error);
+        require('./lib/generate')(config).catch(errorHandler);
     });
 
 program
@@ -46,7 +51,7 @@ program
             logger.level = 5;
         }
 
-        require('./lib/bundle')(config, glob).catch(logger.error);
+        require('./lib/bundle')(config, glob).catch(errorHandler);
     });
 
 program.parse(process.argv);
