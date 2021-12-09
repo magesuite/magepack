@@ -75,7 +75,7 @@ There are 3 required options you need to pass:
 
 `--product-url` - URL to one of product pages.
 
-_Note: Magepack will use given product page, add this product to the cart and visit both cart and checkout pages to collect dependencies._
+_Note: By default, Magepack will use given product page, add this product to the cart and visit both cart and checkout pages to collect dependencies. To avoid this, use the `--skip-checkout` option._
 
 Running the above command will generate `magepack.config.js` file, where you can find each of the prepared bundles with the list of modules that will be included in them.
 
@@ -89,8 +89,11 @@ magepack bundle
 
 This command will iterate over each deployed locale (excluding Magento/blank) and prepare bundles for each of them.
 
-There is one optional param you can set:
-`-g, --glob` - [Glob pattern](https://facelessuser.github.io/wcmatch/glob/#syntax) defining where to look for locales to bundle.
+There are two optional params you can set:
+
+`-c, --config` - defining the configuration file path, in case you have multiple configuration files (e.g multiple themes with individual configuration files)
+
+`-g, --glob` -  defining where to look for locales to bundle.
 
 ### Enabling
 
@@ -129,7 +132,7 @@ Here are our tests results, testing homepage on local development environment wi
 
 ### Bundling with Baler
 
-Please not that Baler does not currently support Magento's JavaScript merging and minification.
+Please note that Baler does not currently support Magento's JavaScript merging and minification.
 
 ![Lighthouse report with 64 score](https://github.com/magesuite/magepack/raw/master/results/baler.png)
 
