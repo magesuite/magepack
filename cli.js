@@ -45,12 +45,13 @@ program
     )
     .option('-g, --glob <path>', 'Glob pattern of themes to bundle.')
     .option('-d, --debug', 'Enable logging of debugging information.')
-    .action(({ config, debug, glob }) => {
+    .option('-s, --sourcemap', 'Include sourcemaps with generated bundles')
+    .action(({ config, sourcemap, debug, glob }) => {
         if (debug) {
             logger.level = 5;
         }
 
-        require('./lib/bundle')(config, glob).catch(errorHandler);
+        require('./lib/bundle')(config, glob, sourcemap).catch(errorHandler);
     });
 
 program.parse(process.argv);
