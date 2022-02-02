@@ -26,6 +26,8 @@ program
     .option('-u, --auth-username <user>', 'Basic authentication username.')
     .option('-p, --auth-password <password>', 'Basic authentication password.')
     .option('-d, --debug', 'Enable logging of debugging information.')
+    .option('-s, --screenshot', 'Enable screenshots of navigated pages.', false)
+    .option('-p, --screenshot-path <path>','Screenshot file path.', 'screenshots')
     .option('-t, --timeout <milliseconds>', 'Page navigation timeout in milliseconds.')
     .option('--skip-checkout', 'Do not generate a bundle for checkout.')
     .action((config) => {
