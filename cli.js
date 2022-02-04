@@ -45,12 +45,19 @@ program
     )
     .option('-g, --glob <path>', 'Glob pattern of themes to bundle.')
     .option('-d, --debug', 'Enable logging of debugging information.')
-    .action(({ config, debug, glob }) => {
+    .option('-s, --sourcemap', 'Include sourcemaps with generated bundles')
+    .option(
+        '-m, --minify',
+        'Minify bundle using terser irrespective of Magento 2 minification setting'
+    )
+    .action(({ config, sourcemap, minify, debug, glob }) => {
         if (debug) {
             logger.level = 5;
         }
 
-        require('./lib/bundle')(config, glob).catch(errorHandler);
+        require('./lib/bundle')(config, glob, sourcemap, minify).catch(
+            errorHandler
+        );
     });
 
 program.parse(process.argv);
