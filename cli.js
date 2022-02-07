@@ -28,6 +28,7 @@ program
     .option('-d, --debug', 'Enable logging of debugging information.')
     .option('-s, --screenshot', 'Enable screenshots of navigated pages.', false)
     .option('-p, --screenshot-path <path>','Screenshot file path.', 'screenshots')
+    .option('-e, --excluded-modules <excluded-modules>','Modules to exclude from generation stage (comma separated)')
     .option('-t, --timeout <milliseconds>', 'Page navigation timeout in milliseconds.')
     .option('--skip-checkout', 'Do not generate a bundle for checkout.')
     .action((config) => {
