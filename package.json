@@ -21,7 +21,7 @@
         "javascript-stringify": "^2.0.1",
         "jsesc": "^3.0.1",
         "lodash.merge": "^4.6.2",
-        "terser": "^4.6.7"
+        "terser": "^5.15.0"
     },
     "lint-staged": {
         "*.json": [
