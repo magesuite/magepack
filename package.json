@@ -15,7 +15,7 @@
     "dependencies": {
         "commander": "^5.0.0",
         "consola": "^2.11.3",
-        "generate-sourcemap": "^0.1.0",
+        "generate-sourcemap": "^0.0.2",
         "glob": "^7.1.6",
         "gzip-size": "^5.1.1",
         "javascript-stringify": "^2.0.1",
