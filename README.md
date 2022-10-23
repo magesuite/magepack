@@ -75,7 +75,7 @@ There are 3 required options you need to pass:
 
 `--product-url` - URL to one of product pages.
 
-_Note: Magepack will use given product page, add this product to the cart and visit both cart and checkout pages to collect dependencies._
+_Note: By default, Magepack will use given product page, add this product to the cart and visit both cart and checkout pages to collect dependencies. To avoid this, use the `--skip-checkout` option._
 
 Running the above command will generate `magepack.config.js` file, where you can find each of the prepared bundles with the list of modules that will be included in them.
 
@@ -89,11 +89,22 @@ magepack bundle
 
 This command will iterate over each deployed locale (excluding Magento/blank) and prepare bundles for each of them.
 
-There are two optional params you can set:
+There are multiple optional params you can set:
 
 `-c, --config` - defining the configuration file path, in case you have multiple configuration files (e.g multiple themes with individual configuration files)
 
 `-g, --glob` -  defining where to look for locales to bundle.
+
+`-s, --sourcemap` - enables sourcemap generation for bundled js.
+
+`-m, --minify` - overrides Magento 2 JS minification setting, minifying the bundle using Terser (used by default if Magento 2 JS minification is enabled).
+
+#### Sourcemaps
+
+It is possible to enable sourcemaps for bundled JS files, using the `-s, --sourcemap` flag with `magepack bundle` command. However, there are couple of caveats:
+
+* It does not respect existing sourcemaps for individual JS files (possible future update)
+* For sourcemaps to be meaningful, Magento 2 JS minification must be **turned off**. This is because Magento 2 does not (and cannot with current PHP implementation) generate sourcemaps for each minified JS file. For this reason, a separate `-m, --minify` flag exists to minify the resulting bundle using Terser.
 
 ### Enabling
 

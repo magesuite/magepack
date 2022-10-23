@@ -1,7 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`moduleWrapper module wrapAnonymousAmd output matches snapshot 1`] = `"define('foo', [], function() {});"`;
-
 exports[`moduleWrapper module wrapNonAmd output matches snapshot 1`] = `
 "define('name', (require.s.contexts._.config.shim['name'] && require.s.contexts._.config.shim['name'].deps || []), function() {
 

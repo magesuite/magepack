@@ -1,0 +1,13 @@
+name: CI
+on: [ push, pull_request ]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Install modules
+      run: yarn install --non-interactive --ignore-optional
+
+    - name: Run ESLint
+      run: yarn run eslint . --report-unused-disable-directives
