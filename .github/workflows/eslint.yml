@@ -11,3 +11,6 @@ jobs:
 
     - name: Run ESLint
       run: yarn run eslint . --report-unused-disable-directives
+
+    - name: Run Jest
+      run: yarn run jest
