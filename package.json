@@ -1,6 +1,6 @@
 {
     "name": "magepack",
-    "version": "2.7.2",
+    "version": "2.11.0",
     "bin": "./cli.js",
     "repository": "https://github.com/magesuite/magepack.git",
     "author": "creativestyle",
@@ -15,12 +15,13 @@
     "dependencies": {
         "commander": "^5.0.0",
         "consola": "^2.11.3",
+        "generate-sourcemap": "^0.0.2",
         "glob": "^7.1.6",
         "gzip-size": "^5.1.1",
         "javascript-stringify": "^2.0.1",
         "jsesc": "^3.0.1",
         "lodash.merge": "^4.6.2",
-        "terser": "^4.6.7"
+        "terser": "^5.15.0"
     },
     "lint-staged": {
         "*.json": [

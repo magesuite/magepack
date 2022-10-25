@@ -27,9 +27,19 @@ program
     .option('-p, --auth-password <password>', 'Basic authentication password.')
     .option('-d, --debug', 'Enable logging of debugging information.')
     .option('-s, --screenshot', 'Enable screenshots of navigated pages.', false)
-    .option('-p, --screenshot-path <path>','Screenshot file path.', 'screenshots')
-    .option('-e, --excluded-modules <excluded-modules>','Modules to exclude from generation stage (comma separated)')
-    .option('-t, --timeout <milliseconds>', 'Page navigation timeout in milliseconds.')
+    .option(
+        '-p, --screenshot-path <path>',
+        'Screenshot file path.',
+        'screenshots'
+    )
+    .option(
+        '-e, --excluded-modules <excluded-modules>',
+        'Modules to exclude from generation stage (comma separated)'
+    )
+    .option(
+        '-t, --timeout <milliseconds>',
+        'Page navigation timeout in milliseconds.'
+    )
     .option('--skip-checkout', 'Do not generate a bundle for checkout.')
     .action((config) => {
         if (config.debug) {
@@ -49,12 +59,19 @@ program
     )
     .option('-g, --glob <path>', 'Glob pattern of themes to bundle.')
     .option('-d, --debug', 'Enable logging of debugging information.')
-    .action(({ config, debug, glob }) => {
+    .option('-s, --sourcemap', 'Include sourcemaps with generated bundles')
+    .option(
+        '-m, --minify',
+        'Minify bundle using terser irrespective of Magento 2 minification setting'
+    )
+    .action(({ config, sourcemap, minify, debug, glob }) => {
         if (debug) {
             logger.level = 5;
         }
 
-        require('./lib/bundle')(config, glob).catch(errorHandler);
+        require('./lib/bundle')(config, glob, sourcemap, minify).catch(
+            errorHandler
+        );
     });
 
 program.parse(process.argv);
