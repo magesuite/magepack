@@ -25,6 +25,7 @@ program
     .requiredOption('--product-url <url>', 'Product page URL.')
     .option('-u, --auth-username <user>', 'Basic authentication username.')
     .option('-p, --auth-password <password>', 'Basic authentication password.')
+    .option('-o, --output <path>', 'Output file path.')
     .option('-d, --debug', 'Enable logging of debugging information.')
     .option('--skip-checkout', 'Do not generate a bundle for checkout.')
     .action((config) => {
