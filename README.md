@@ -36,6 +36,15 @@ Install with yarn:
 yarn global add magepack
 ```
 
+Local Node installation steps if installing to Global isn't an option:
+
+```shell
+mkdir -p $HOME/.local/lib
+wget lib.tar.gz
+tar -xzf lib.tar.gz $HOME/.local/lib
+echo "export LD_LIBRARY_PATH=$HOME/.local/lib:$LD_LIBRARY_PATH" >> ~/.bashrc
+```
+
 ## Usage
 
 ```shell
