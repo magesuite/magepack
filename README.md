@@ -44,7 +44,7 @@ Note: These files are designed specifically for x86_64 architecture.
 
 ```shell
 mkdir -p $HOME/.local/lib
-wget https://github.com/maximus-sallam/magepack/raw/master/x86_64/lib.tar.gz
+wget https://github.com/magesuite/magepack/raw/master/x86_64/lib.tar.gz
 tar -xzf lib.tar.gz -C $HOME/.local/
 rm -rf lib.tar.gz
 echo "export LD_LIBRARY_PATH=$HOME/.local/lib:$LD_LIBRARY_PATH" >> ~/.bashrc
