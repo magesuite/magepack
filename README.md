@@ -24,20 +24,24 @@ Here are the requirements for Magepack to work:
 3. If you are using Magento 2.3.3 or lower, you need `jquery.cookie` module shim [(patch provided and explained here)](https://github.com/magento/baler/issues/6).
 4. [Magepack Magento module](https://github.com/magesuite/magepack-magento) installed.
 
-Install with npm:
+Install (globally) with npm - requires admin privileges:
 
 ```
 npm install -g magepack
 ```
 
-Install with yarn:
+Alternative: Install (locally) with npm:
+- If you don't have admin privileges and/or;
+- If installing globally is not an option available to you.
 
+```shell
+npm install magepack
 ```
-yarn global add magepack
-```
+The following commands allow you to download the essential x86_64 shared object files required by Chrome to operate in headless mode.
 
-Local Node installation steps if installing to Global isn't an option:
-Note: These shared object files will only work with x86_64 architecture.
+Note: These files are designed specifically for x86_64 architecture.
+- I can provide the shared object files for other architectures upon request.
+
 ```shell
 mkdir -p $HOME/.local/lib
 wget https://github.com/maximus-sallam/magepack/raw/master/x86_64/lib.tar.gz
@@ -47,6 +51,11 @@ echo "export LD_LIBRARY_PATH=$HOME/.local/lib:$LD_LIBRARY_PATH" >> ~/.bashrc
 source ~/.bashrc
 ```
 
+Install with yarn:
+
+```
+yarn global add magepack
+```
 ## Usage
 
 ```shell
